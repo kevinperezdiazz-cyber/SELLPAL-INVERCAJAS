@@ -1,0 +1,31 @@
+================================================================================
+SELLPAL — Interfaz sellpal-fixed + PostgreSQL + Spring Boot
+================================================================================
+
+CREDENCIALES (se crean solas al arrancar Spring):
+
+  1) Administrador
+     Correo:      carlos.morales@invercajas.com
+     (también)    admin@sellpal.co
+     Contraseña:  admin123
+     → Panel admin (dashboard, CRUDs, reportes, registros)
+
+  2) Cliente mayorista
+     Correo:      compras@elahorro.co
+     Contraseña:  123456
+     → Catálogo / carrito / mis pedidos
+     Documento cliente en BD: 9005432101
+
+PASOS
+1) CREATE DATABASE sellpal_db;
+2) Ejecutar database/SELLPAL_TODO_EN_UNO.sql (productos, pedidos, etc.)
+3) IntelliJ → Run SellpalApplication
+4) http://localhost:8080/
+5) Si ves sesión vieja: F12 → Application → Local Storage → Clear
+
+NOTAS
+- Login es asíncrono contra /api/auth/login
+- Pedidos usan el documento del cliente de la sesión
+- Dashboard/reportes leen de la API (necesitas datos en PostgreSQL)
+- Registros/auditoría se guardan en el navegador al usar la app
+================================================================================

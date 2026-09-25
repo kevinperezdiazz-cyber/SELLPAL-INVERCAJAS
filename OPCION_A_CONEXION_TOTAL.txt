@@ -1,0 +1,36 @@
+================================================================================
+SELLPAL — OPCIÓN A: Conexión total (UI sellpal-fixed + PostgreSQL)
+================================================================================
+
+ARQUITECTURA
+  Interfaz (sellpal-fixed)  →  api.js (fetch)  →  Spring Boot  →  PostgreSQL
+  Login real: /api/auth/login  →  tabla usuarios
+
+PASOS
+1) PostgreSQL
+   CREATE DATABASE sellpal_db;
+   Ejecutar: database/SELLPAL_TODO_EN_UNO.sql  (sobre sellpal_db)
+
+2) application-postgresql.properties
+   url: jdbc:postgresql://localhost:5432/sellpal_db
+   user/password: los tuyos (por defecto postgres / 12345kd)
+
+3) IntelliJ → ejecutar SellpalApplication (puerto 8080)
+
+4) Navegador: http://localhost:8080/
+   Login:
+     Correo:      admin@sellpal.co
+     Contraseña:  Admin2026!
+   (el admin se crea solo al arrancar Spring)
+
+5) Prueba de verdad única:
+   - Crea un producto en el panel admin
+   - Refresca en pgAdmin tabla producto → debe aparecer
+   - Postman GET /api/productos → mismo dato
+
+IMPORTANTE
+  - Abrir siempre por localhost:8080 (no file://)
+  - Si ves datos viejos: localStorage.clear() y vuelve a login
+  - data.js ya NO guarda datos; solo ApiService → BD
+
+================================================================================

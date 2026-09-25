@@ -1,0 +1,90 @@
+================================================================================
+SELLPAL — INSTALACIÓN RÁPIDA (sin errores)
+================================================================================
+
+REQUISITOS
+  - Java 17
+  - Maven 3.9+ (o usa el Maven de IntelliJ)
+  - PostgreSQL 14+ en marcha
+  - IntelliJ IDEA (recomendado)
+
+--------------------------------------------------------------------------------
+PASO 1 — Crear la base de datos
+--------------------------------------------------------------------------------
+En pgAdmin o psql:
+
+  CREATE DATABASE sellpal_db;
+
+Usuario y contraseña por defecto del proyecto:
+
+  usuario: postgres
+  clave:   12345kd
+
+Si tu clave es otra, edita:
+  src/main/resources/application-postgresql.properties
+
+--------------------------------------------------------------------------------
+PASO 2 — Un solo script SQL (TODO)
+--------------------------------------------------------------------------------
+Conéctate a la base sellpal_db y ejecuta COMPLETO el archivo:
+
+  database/SELLPAL_TODO_EN_UNO.sql
+
+Ese script:
+  - Borra tablas viejas
+  - Crea el MER + columnas de la interfaz
+  - Inserta productos Mondelez, cargos, clientes, empleados
+
+Al final debe mostrar conteos (cargos, productos, etc.).
+
+--------------------------------------------------------------------------------
+PASO 3 — Arrancar el backend (IntelliJ)
+--------------------------------------------------------------------------------
+1. Abre la carpeta del proyecto (la que tiene pom.xml)
+2. Configura JDK 17
+3. Ejecuta la clase: SellpalApplication
+4. Espera a ver que arrancó en el puerto 8080
+
+El admin se crea solo al arrancar:
+  Correo:      admin@sellpal.co
+  Contraseña:  Admin2026!
+
+--------------------------------------------------------------------------------
+PASO 4 — Interfaz web
+--------------------------------------------------------------------------------
+Navegador:
+
+  http://localhost:8080/
+
+Login con admin@sellpal.co / Admin2026!
+Panel admin, catálogo, productos: todo lee y escribe en PostgreSQL.
+
+--------------------------------------------------------------------------------
+PASO 5 — Postman
+--------------------------------------------------------------------------------
+Importa:
+  postman/SELLPAL-FINAL.postman_collection.json
+
+Primero: Auth → Login administrador
+Luego prueba GET/POST de productos, clientes, etc.
+
+--------------------------------------------------------------------------------
+SI ALGO FALLA
+--------------------------------------------------------------------------------
+1) PostgreSQL no conecta
+   - ¿Servicio postgres activo?
+   - ¿Contraseña igual a application-postgresql.properties?
+   - ¿Existe la BD sellpal_db?
+
+2) Tablas vacías en la UI
+   - ¿Ejecutaste SELLPAL_TODO_EN_UNO.sql sobre sellpal_db?
+   - ¿La app muestra "postgresql" en el log, no H2?
+
+3) 401 al crear productos
+   - Debes estar logueado (cookie de sesión)
+   - En Postman: login primero
+
+4) Error de FK al crear pedido
+   - Debe existir el cliente (documento_unico) y un estado_pedido
+
+================================================================================
